@@ -3,7 +3,7 @@
   "displayName": "Searchable Debug Console",
   "description": "Replicate debug console output into a terminal in the editor area so it can be searched",
   "version": "0.0.4-SNAPSHOT",
-  "publisher": "georgejames",
+  "publisher": "juansuarezz",
   "icon": "media/extension-icon.png",
   "repository": {
     "type": "git",

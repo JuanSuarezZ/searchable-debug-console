@@ -39,12 +39,17 @@ export class TerminalDebugTracker implements vscode.DebugAdapterTracker {
       }
       const output = message.body?.output.replace(/\n$/, '');
       const color = message.body.category === 'stdout' ? '\x1b[34m' : message.body.category === 'stderr' ? '\x1b[31m' : '\x1b[33m';
-      const lineNumber = ++this.lineNumber;
       if (message.body.source) {
-        this.linkMap.set(lineNumber, { startIndex: 0, length: 2 + lineNumber.toString().length, tooltip: `${message.body.source?.name}:${message.body.line}:${message.body.column} (${message.body.category})`, sourcePath: message.body.source.path, line: message.body.line, column: message.body.column});
-        return `${color}[${lineNumber}] ${output}${color ? '\x1b[0m' : ''}`;
+        this.linkMap.set(this.lineNumber, { 
+          startIndex: 0, 
+          length: 0,  // Ya no necesitamos un índice de línea 
+          tooltip: `${message.body.source?.name}:${message.body.line}:${message.body.column} (${message.body.category})`, 
+          sourcePath: message.body.source.path, 
+          line: message.body.line, 
+          column: message.body.column
+        });
       }
-      return `${color}(${lineNumber}) ${output}${color ? '\x1b[0m' : ''}`;
+      return `${color}${output}${color ? '\x1b[0m' : ''}`; // Quitamos el número de línea
     };
     
     if (!this.pty) {
